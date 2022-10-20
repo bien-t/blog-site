@@ -1,4 +1,6 @@
 import type { GatsbyConfig } from "gatsby"
+import * as dotenv from 'dotenv'
+dotenv.config()
 
 const config: GatsbyConfig = {
   siteMetadata: {
@@ -8,7 +10,27 @@ const config: GatsbyConfig = {
   // If you use VSCode you can also use the GraphQL plugin
   // Learn more at: https://gatsby.dev/graphql-typegen
   graphqlTypegen: true,
-  plugins: [],
+  plugins: [
+    'gatsby-plugin-postcss',
+    'gatsby-plugin-fontawesome-css',
+    'gatsby-plugin-image',
+    'gatsby-plugin-sharp',
+    'gatsby-transformer-sharp',
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: 'images',
+        path: `${__dirname}/src/images/`,
+      },
+    },
+    {
+      resolve: 'gatsby-source-graphcms',
+      options: {
+        endpoint: process.env.GRAPHCMS_ENDPOINT,
+        token: process.env.GRAPHCMS_TOKEN,
+      },
+    },
+  ],
 }
 
 export default config
